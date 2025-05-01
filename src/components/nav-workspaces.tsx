@@ -1,48 +1,40 @@
-import { ChevronRight, MoreHorizontal, PackageIcon, Plus } from "lucide-react";
-
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import { MoreHorizontal, PackageIcon } from "lucide-react";
 import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
-import Image, { StaticImageData } from "next/image";
+import Link from "next/link";
+import { useProjects } from "@/contexts/ProjectContext";
+import { usePathname } from "next/navigation";
 
-export function NavWorkspaces({
-  workspaces,
-}: {
-  workspaces: {
-    name: string;
-  }[];
-}) {
+export function NavWorkspaces() {
+  const { projects } = useProjects();
+  const pathname = usePathname();
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Workspaces</SidebarGroupLabel>
       <SidebarGroupContent>
         <SidebarMenu>
-          {workspaces.map((workspace) => (
-            <div key={workspace.name}>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <a href="#">
-                    <PackageIcon></PackageIcon>
-                    <span>{workspace.name}</span>
-                  </a>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </div>
-          ))}
+          {projects.slice(0, 5).map((project) => {
+            const isActive = pathname === `/projects/${project.id}`;
+            return (
+              <div key={project.id}>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild isActive={isActive}>
+                    <Link href={`/projects/${project.id}`}>
+                      <PackageIcon></PackageIcon>
+                      <span>{project.name}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </div>
+            );
+          })}
           <SidebarMenuItem>
             <SidebarMenuButton className="text-sidebar-foreground/70">
               <MoreHorizontal />

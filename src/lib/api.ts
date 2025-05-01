@@ -53,6 +53,15 @@ export const getTasksByUser = async () => {
   }
 };
 
+export const getProjectByUser = async () => {
+  try {
+    const response = await API.get("/projects");
+    return response.data;
+  } catch (error) {
+    throw new Error("Could not get projects");
+  }
+};
+
 export const createTask = async (data: {
   title: string;
   description: string;
@@ -78,6 +87,16 @@ export const getProjectById = async (id: number) => {
   }
 };
 
-export async function updateTaskStatus(taskId:number,status:string){
-  await API.put(`tasks/status/${taskId}`,{status})
+export async function updateTaskStatus(taskId: number, status: string) {
+  await API.put(`tasks/status/${taskId}`, { status });
 }
+
+export const createProject = async (data: { name: string }) => {
+  try {
+    const response = await API.post("/projects", data);
+    return response.data;
+  } catch (error) {
+    console.error("Erreur création projet:", error);
+    throw error;
+  }
+};

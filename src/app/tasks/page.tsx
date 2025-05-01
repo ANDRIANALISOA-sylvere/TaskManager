@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import toast, { Toaster } from "react-hot-toast";
 import {
   Select,
   SelectContent,
@@ -76,6 +77,7 @@ export default function Tasks() {
       setProjectId(null);
       setDeadline(undefined);
       setPriority("");
+      toast.success("Task successfully added!");
     } catch (error) {
       console.error("Erreur création tâche:", error);
     }
@@ -267,6 +269,7 @@ export default function Tasks() {
           </div>
         </SidebarInset>
       </SidebarProvider>
+      <Toaster position="top-center" reverseOrder={false}></Toaster>
     </ProtectedRoute>
   );
 }

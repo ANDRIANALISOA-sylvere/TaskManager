@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import toast, { Toaster } from "react-hot-toast";
 import {
   SidebarInset,
   SidebarProvider,
@@ -20,10 +21,42 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import { useAuth } from "@/contexts/AuthContext";
 import { useTasks } from "@/contexts/TaskContext";
 import Loading from "@/components/Loading";
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { createProject } from "@/lib/api";
+import { useProjects } from "@/contexts/ProjectContext";
+import Link from "next/link";
 
 export default function Page() {
-  const { user } = useAuth();
-  const { tasks, loading } = useTasks();
+  const { tasks, loading: TaskLoading } = useTasks();
+  const { projects, loading: ProjectLoading, refreshProjects } = useProjects();
+  const [open, setOpen] = useState(false);
+  const [name, setName] = useState("");
+
+  const handleSubmit = async () => {
+    if (!name) return;
+
+    try {
+      await createProject({ name });
+      setOpen(false);
+      refreshProjects();
+      setName("");
+      toast.success("Project successfully added!");
+    } catch (error) {
+      console.error("Erreur création tâche:", error);
+    }
+  };
+
   return (
     <ProtectedRoute>
       <SidebarProvider>
@@ -44,7 +77,7 @@ export default function Page() {
             </div>
           </header>
 
-          {loading ? (
+          {TaskLoading || ProjectLoading ? (
             <Loading></Loading>
           ) : (
             <div className="px-8">
@@ -53,7 +86,7 @@ export default function Page() {
                   <div>
                     <h2 className="text-gray-500">Total projects</h2>
                     <p className="font-extrabold text-2xl mt-2">
-                      {user && user.projects.length}
+                      {projects && projects.length}
                     </p>
                   </div>
                 </div>
@@ -148,53 +181,72 @@ export default function Page() {
                 <div>
                   <Card className="shadow-none rounded-sm dark:bg-background">
                     <CardHeader>
-                      <CardTitle>Projects</CardTitle>
+                      <CardTitle>Recently added</CardTitle>
                       <CardDescription></CardDescription>
                     </CardHeader>
                     <Separator></Separator>
                     <CardContent className="grid grid-cols-2 gap-x-2 gap-y-2">
-                      <div className="shadow-none border px-4 flex flex-row transition-colors duration-300 space-x-2 items-center bg-background rounded-lg border-dashed cursor-pointer hover:bg-slate-50 dark:hover:dark:bg-slate-600">
-                        <div className="bg-slate-200 dark:bg-slate-700 rounded-full p-1">
-                          <Plus></Plus>
-                        </div>
-                        <span>New Project</span>
-                      </div>
-                      <Card className="shadow-none bg-background rounded-lg">
-                        <CardHeader className="flex flex-row space-x-2 items-center">
-                          <PackageIcon className="h-12 w-12 text-muted-foreground"></PackageIcon>
-                          <div>
-                            <CardTitle>Yellow Branding</CardTitle>
-                            <CardDescription>1 task due soon</CardDescription>
+                      <Dialog open={open} onOpenChange={setOpen}>
+                        <DialogTrigger asChild>
+                          <div className="shadow-none border px-4 flex flex-row transition-colors duration-300 space-x-2 items-center bg-background rounded-lg border-dashed cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800">
+                            <div className="bg-slate-200 dark:bg-slate-700 rounded-full p-1">
+                              <Plus></Plus>
+                            </div>
+                            <span>New Project</span>
                           </div>
-                        </CardHeader>
-                      </Card>
-                      <Card className="shadow-none bg-background rounded-lg">
-                        <CardHeader className="flex flex-row space-x-2 items-center">
-                          <PackageIcon className="h-12 w-12 text-muted-foreground"></PackageIcon>
-                          <div>
-                            <CardTitle>Yellow Branding</CardTitle>
-                            <CardDescription>1 task due soon</CardDescription>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-[400px]">
+                          <DialogHeader>
+                            <DialogTitle>Add Project</DialogTitle>
+                            <DialogDescription>
+                              Add new project
+                            </DialogDescription>
+                          </DialogHeader>
+                          <div className="space-y-2">
+                            <Label htmlFor="name">Name</Label>
+                            <Input
+                              type="text"
+                              id="name"
+                              name="name"
+                              value={name}
+                              onChange={(e) => setName(e.target.value)}
+                              placeholder="Entrer the name of the project"
+                              className="w-full"
+                            ></Input>
                           </div>
-                        </CardHeader>
-                      </Card>
-                      <Card className="shadow-none bg-background rounded-lg">
-                        <CardHeader className="flex flex-row space-x-2 items-center">
-                          <PackageIcon className="h-12 w-12 text-muted-foreground"></PackageIcon>
-                          <div>
-                            <CardTitle>Yellow Branding</CardTitle>
-                            <CardDescription>1 task due soon</CardDescription>
-                          </div>
-                        </CardHeader>
-                      </Card>
-                      <Card className="shadow-none bg-background rounded-lg">
-                        <CardHeader className="flex flex-row space-x-2 items-center">
-                          <PackageIcon className="h-12 w-12 text-muted-foreground"></PackageIcon>
-                          <div>
-                            <CardTitle>Yellow Branding</CardTitle>
-                            <CardDescription>1 task due soon</CardDescription>
-                          </div>
-                        </CardHeader>
-                      </Card>
+                          <DialogFooter>
+                            <Button
+                              onClick={handleSubmit}
+                              className="cursor-pointer"
+                            >
+                              Save
+                            </Button>
+                          </DialogFooter>
+                        </DialogContent>
+                      </Dialog>
+                      {projects &&
+                        projects.slice(0, 5).map((project, index) => (
+                          <Link
+                            key={project.id}
+                            href={`/projects/${project.id}`}
+                          >
+                            <Card className="shadow-none hover:shadow-sm transition-all border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-2px]">
+                              <CardHeader className="flex flex-row space-x-2 items-center">
+                                <div className="h-10 w-10 rounded-full bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center">
+                                  <PackageIcon className="h-5 w-5 text-pink-600 dark:text-pink-400" />
+                                </div>
+                                <div>
+                                  <CardTitle className="text-base font-medium">
+                                    {project.name}
+                                  </CardTitle>
+                                  <CardDescription className="text-xs mt-1">
+                                    1 task due soon
+                                  </CardDescription>
+                                </div>
+                              </CardHeader>
+                            </Card>
+                          </Link>
+                        ))}
                     </CardContent>
                   </Card>
                 </div>
@@ -223,6 +275,7 @@ export default function Page() {
           )}
         </SidebarInset>
       </SidebarProvider>
+      <Toaster position="top-center" reverseOrder={false}></Toaster>
     </ProtectedRoute>
   );
 }

@@ -18,6 +18,7 @@ import {
   Plus,
 } from "lucide-react";
 import { updateTaskStatus } from "@/lib/api";
+import NoData from "./NoData";
 type Task = {
   id: string;
   title: string;
@@ -152,144 +153,152 @@ export default function TaskView({ view, tasks, refreshTasks }: TaskProps) {
   };
   return (
     <div>
-      {view === "table" && (
-        <Table className="mt-2">
-          <TableHeader>
-            <TableRow className="dark:bg-card bg-sidebar">
-              <TableHead>Task Name</TableHead>
-              <TableHead>Project</TableHead>
-              <TableHead>Due Date</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Priority</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {tasks.map((task) => {
-              const { text, className } = getStatus(task.status);
-              return (
-                <TableRow key={task.id}>
-                  <TableCell className="font-medium">{task.title}</TableCell>
-                  <TableCell>{getProjectName(task)}</TableCell>
-                  <TableCell>
-                    <DateFormatter date={task.deadline}></DateFormatter>
-                  </TableCell>
-                  <TableCell>
-                    <Badge className={`${className} rounded-2xl font-medium`}>
-                      {text}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>{getPriority(task.priority)}</TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      )}
+      {view === "table" &&
+        (tasks.length === 0 ? (
+          <NoData></NoData>
+        ) : (
+          <Table className="mt-2">
+            <TableHeader>
+              <TableRow className="dark:bg-card bg-sidebar">
+                <TableHead>Task Name</TableHead>
+                <TableHead>Project</TableHead>
+                <TableHead>Due Date</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Priority</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {tasks.map((task) => {
+                const { text, className } = getStatus(task.status);
+                return (
+                  <TableRow key={task.id}>
+                    <TableCell className="font-medium">{task.title}</TableCell>
+                    <TableCell>{getProjectName(task)}</TableCell>
+                    <TableCell>
+                      <DateFormatter date={task.deadline}></DateFormatter>
+                    </TableCell>
+                    <TableCell>
+                      <Badge className={`${className} rounded-2xl font-medium`}>
+                        {text}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>{getPriority(task.priority)}</TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        ))}
       {view === "kanban" && (
-        <div className="p-2 bg-gray-50 dark:bg-card/40 ">
-          <div className="flex gap-5 overflow-x-auto">
-            {columns.map((col) => (
-              <div
-                key={col.id}
-                onDragOver={handleDragOver}
-                onDrop={() => handleDrop(col.id)}
-                className="bg-white dark:bg-background  rounded px-2 py-2 w-80 flex flex-col"
-              >
-                {/* Board category header */}
-                <div className="flex flex-row justify-between items-center mb-2 mx-1">
-                  <div className="flex items-center">
-                    <h2
-                      className={`${
-                        col.id === "TODO"
-                          ? "bg-red-100"
-                          : col.id === "INPROGRESSE"
-                          ? "bg-yellow-100"
-                          : "bg-green-100"
-                      } text-sm w-max px-2 flex flex-row  items-center gap-x-2 rounded mr-2 text-gray-700`}
-                    >
-                      {col.id === "TODO" && (
-                        <Circle size={16} className="text-red-400"></Circle>
-                      )}{" "}
-                      {col.id === "INPROGRESSE" && (
-                        <CircleDashed
-                          size={16}
-                          className="text-amber-400"
-                        ></CircleDashed>
-                      )}{" "}
-                      {col.id === "COMPLETE" && (
-                        <CircleCheck
-                          fill="green"
-                          size={16}
-                          className="text-green-400"
-                        ></CircleCheck>
-                      )}{" "}
-                      {col.title}
-                    </h2>
-                    <p className="text-gray-400 text-sm">
-                      {columnsData[col.id]?.length || 0}
-                    </p>
-                  </div>
-                  <div className="flex items-center text-gray-300">
-                    <p className="mr-2 text-xl">
-                      <Ellipsis></Ellipsis>
-                    </p>
-                    <p className="text-md">
-                      <Plus></Plus>
-                    </p>
-                  </div>
-                </div>
-
-                {/* Board cards */}
-                <div className="flex-grow overflow-y-auto">
-                  <div className="grid gap-2">
-                    {columnsData[col.id]?.map((task: Task) => (
-                      <div
-                        key={task.id}
-                        draggable
-                        onDragStart={() => handleDragStart(task.id.toString())}
-                        className="p-2 rounded shadow-sm border-gray-100 dark:border-card/50 dark:hover:border-card border-2 cursor-move hover:border-gray-200 transition-colors"
+        <div>
+          {tasks.length === 0 && <NoData></NoData>}
+          <div className="p-2 bg-gray-50 dark:bg-card/40 mt-2">
+            <div className="flex gap-5 overflow-x-auto">
+              {columns.map((col) => (
+                <div
+                  key={col.id}
+                  onDragOver={handleDragOver}
+                  onDrop={() => handleDrop(col.id)}
+                  className="bg-white dark:bg-background  rounded px-2 py-2 w-80 flex flex-col"
+                >
+                  {/* Board category header */}
+                  <div className="flex flex-row justify-between items-center mb-2 mx-1">
+                    <div className="flex items-center">
+                      <h2
+                        className={`${
+                          col.id === "TODO"
+                            ? "bg-red-100"
+                            : col.id === "INPROGRESSE"
+                            ? "bg-yellow-100"
+                            : "bg-green-100"
+                        } text-sm w-max px-2 flex flex-row  items-center gap-x-2 rounded mr-2 text-gray-700`}
                       >
-                        <h3 className="text-sm mb-3 text-gray-700 dark:text-white font-bold">
-                          {task.title}
-                        </h3>
+                        {col.id === "TODO" && (
+                          <Circle size={16} className="text-red-400"></Circle>
+                        )}{" "}
+                        {col.id === "INPROGRESSE" && (
+                          <CircleDashed
+                            size={16}
+                            className="text-amber-400"
+                          ></CircleDashed>
+                        )}{" "}
+                        {col.id === "COMPLETE" && (
+                          <CircleCheck
+                            fill="green"
+                            size={16}
+                            className="text-green-400"
+                          ></CircleCheck>
+                        )}{" "}
+                        {col.title}
+                      </h2>
+                      <p className="text-gray-400 text-sm">
+                        {columnsData[col.id]?.length || 0}
+                      </p>
+                    </div>
+                    <div className="flex items-center text-gray-300">
+                      <p className="mr-2 text-xl">
+                        <Ellipsis></Ellipsis>
+                      </p>
+                      <p className="text-md">
+                        <Plus></Plus>
+                      </p>
+                    </div>
+                  </div>
 
-                        {task.priority && (
-                          <div className="mt-2">
-                            <span
-                              className={`text-xs w-max p-1 rounded mr-2 ${
-                                task.priority === "ELEVE"
-                                  ? "bg-red-50 text-red-600"
+                  {/* Board cards */}
+                  <div className="flex-grow overflow-y-auto">
+                    <div className="grid gap-2">
+                      {columnsData[col.id]?.map((task: Task) => (
+                        <div
+                          key={task.id}
+                          draggable
+                          onDragStart={() =>
+                            handleDragStart(task.id.toString())
+                          }
+                          className="p-2 rounded shadow-sm border-gray-100 dark:border-card/50 dark:hover:border-card border-2 cursor-move hover:border-gray-200 transition-colors"
+                        >
+                          <h3 className="text-sm mb-3 text-gray-700 dark:text-white font-bold">
+                            {task.title}
+                          </h3>
+
+                          {task.priority && (
+                            <div className="mt-2">
+                              <span
+                                className={`text-xs w-max p-1 rounded mr-2 ${
+                                  task.priority === "ELEVE"
+                                    ? "bg-red-50 text-red-600"
+                                    : task.priority === "MOYENNE"
+                                    ? "bg-yellow-50 text-yellow-600"
+                                    : "bg-green-50 text-green-600"
+                                }`}
+                              >
+                                {task.priority === "ELEVE"
+                                  ? "Priorité haute"
                                   : task.priority === "MOYENNE"
-                                  ? "bg-yellow-50 text-yellow-600"
-                                  : "bg-green-50 text-green-600"
-                              }`}
-                            >
-                              {task.priority === "ELEVE"
-                                ? "Priorité haute"
-                                : task.priority === "MOYENNE"
-                                ? "Priorité moyenne"
-                                : task.priority === "FAIBLE"
-                                ? "Priorité basse"
-                                : task.priority}
-                            </span>
-                          </div>
-                        )}
+                                  ? "Priorité moyenne"
+                                  : task.priority === "FAIBLE"
+                                  ? "Priorité basse"
+                                  : task.priority}
+                              </span>
+                            </div>
+                          )}
 
-                        <p className="text-xs text-gray-500 mt-2">
-                          <DateFormatter date={task.deadline} />
-                        </p>
-
-                        {getProjectName(task) && (
-                          <p className="text-xs text-gray-500 mt-2 bg-blue-50 p-1 rounded w-max">
-                            {getProjectName(task)}
+                          <p className="text-xs text-gray-500 mt-2">
+                            <DateFormatter date={task.deadline} />
                           </p>
-                        )}
-                      </div>
-                    ))}
+
+                          {getProjectName(task) && (
+                            <p className="text-xs text-gray-500 mt-2 bg-blue-50 p-1 rounded w-max">
+                              {getProjectName(task)}
+                            </p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       )}

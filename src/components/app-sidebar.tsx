@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Separator } from "./ui/separator";
 import Image from "next/image";
+import { useProjects } from "@/contexts/ProjectContext";
 
 // This is sample data.
 const data = {
@@ -184,7 +185,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <Separator></Separator>
       <SidebarContent>
-        <NavWorkspaces workspaces={data.workspaces} />
+        <NavWorkspaces />
       </SidebarContent>
       <SidebarRail />
     </Sidebar>

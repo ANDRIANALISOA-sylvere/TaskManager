@@ -7,6 +7,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import toast, { Toaster } from "react-hot-toast";
 import {
   Dialog,
   DialogContent,
@@ -63,17 +64,21 @@ export default function Project() {
   const [priority, setPriority] = useState("");
   const [open, setOpen] = useState(false);
   const [view, setView] = useState<"table" | "kanban" | "calendar">("table");
+  const [loading, setLoading] = useState(true);
 
   const fetchProject = async () => {
     try {
       const data = await getProjectById(Number(id));
       setProject(data);
+      setLoading(false);
     } catch (error: any) {
       if (error.response && error.response.status === 403) {
         setError("Vous n'avez pas accès à ce projet");
       } else {
         setError("Le projet n'existe pas ou une erreur est survenue");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -102,6 +107,7 @@ export default function Project() {
       setDescription("");
       setDeadline(undefined);
       setPriority("");
+      toast.success("Task successfully added!");
     } catch (error) {
       console.error("Erreur création tâche:", error);
     }
@@ -136,7 +142,7 @@ export default function Project() {
             </div>
           </header>
 
-          {!project ? (
+          {loading || !project ? (
             <Loading></Loading>
           ) : (
             <div className="px-8">
@@ -331,6 +337,7 @@ export default function Project() {
           )}
         </SidebarInset>
       </SidebarProvider>
+      <Toaster position="top-center" reverseOrder={false}></Toaster>
     </ProtectedRoute>
   );
 }
