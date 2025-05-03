@@ -11,6 +11,7 @@ type Task = {
   priority: string;
   status: string;
   deadline: string;
+  createdAt: string;
 };
 
 type TaskContextType = {

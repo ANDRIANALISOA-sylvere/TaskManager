@@ -23,6 +23,7 @@ type Project = {
   userId: number;
   User: User;
   tasks: Task[];
+  createdAt: string;
 };
 
 type ProjectContextType = {

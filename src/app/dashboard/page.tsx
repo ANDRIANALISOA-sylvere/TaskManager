@@ -18,7 +18,6 @@ import {
 } from "@/components/ui/sidebar";
 import { Eye, PackageIcon, Plus } from "lucide-react";
 import ProtectedRoute from "@/components/ProtectedRoute";
-import { useAuth } from "@/contexts/AuthContext";
 import { useTasks } from "@/contexts/TaskContext";
 import Loading from "@/components/Loading";
 import { useState } from "react";
@@ -36,6 +35,22 @@ import { Input } from "@/components/ui/input";
 import { createProject } from "@/lib/api";
 import { useProjects } from "@/contexts/ProjectContext";
 import Link from "next/link";
+import {
+  getMonth,
+  getYear,
+  isThisMonth,
+  parseISO,
+} from "date-fns";
+import SummaryCard from "@/components/SummaryCard";
+
+function isLastMonth(date: Date): boolean {
+  const now = new Date();
+
+  const lastMonth = getMonth(now) === 0 ? 11 : getMonth(now) - 1;
+  const year = getMonth(now) === 0 ? getYear(now) - 1 : getYear(now);
+
+  return getMonth(date) === lastMonth && getYear(date) === year;
+}
 
 export default function Page() {
   const { tasks, loading: TaskLoading } = useTasks();
@@ -56,6 +71,34 @@ export default function Page() {
       console.error("Erreur création tâche:", error);
     }
   };
+
+  const completedTasks = tasks.filter(
+    (task) => task.status === "COMPLETE"
+  ).length;
+  const incompletedTasks = tasks.filter(
+    (task) => task.status !== "COMPLETE"
+  ).length;
+
+  const thisMonth = (date: string) => isThisMonth(parseISO(date));
+  const lastMonth = (date: string) => isLastMonth(parseISO(date));
+
+  const currentProjects = projects.filter((p) => thisMonth(p.createdAt)).length;
+  const previousProjects = projects.filter((p) =>
+    lastMonth(p.createdAt)
+  ).length;
+
+  const currentTasks = tasks.filter((t) => thisMonth(t.createdAt)).length;
+  const previousTasks = tasks.filter((t) => lastMonth(t.createdAt)).length;
+
+  const completedCurrent = tasks.filter(
+    (t) => thisMonth(t.createdAt) && t.status === "COMPLETE"
+  ).length;
+  const completedPrevious = tasks.filter(
+    (t) => lastMonth(t.createdAt) && t.status === "COMPLETE"
+  ).length;
+
+  console.log(completedCurrent);
+  
 
   return (
     <ProtectedRoute>
@@ -84,7 +127,14 @@ export default function Page() {
               <div className="flex flex-row justify-around border rounded-md">
                 <div className="py-4 flex justify-between">
                   <div>
-                    <h2 className="text-gray-500">Total projects</h2>
+                    <div className="flex space-x-4">
+                      <h2 className="text-gray-500">Total projects</h2>
+                      <SummaryCard
+                        title="Projects"
+                        current={currentProjects}
+                        previous={previousProjects}
+                      ></SummaryCard>
+                    </div>
                     <p className="font-extrabold text-2xl mt-2">
                       {projects && projects.length}
                     </p>
@@ -93,7 +143,14 @@ export default function Page() {
                 <div className="py-4 flex justify-between gap-4">
                   <Separator orientation="vertical"></Separator>
                   <div>
-                    <h2 className="text-gray-500">Total tasks</h2>
+                    <div className="flex space-x-4">
+                      <h2 className="text-gray-500">Total tasks</h2>
+                      <SummaryCard
+                        title="Tasks"
+                        current={currentTasks}
+                        previous={previousTasks}
+                      ></SummaryCard>
+                    </div>
                     <p className="font-extrabold text-2xl mt-2">
                       {tasks && tasks.length}
                     </p>
@@ -109,15 +166,26 @@ export default function Page() {
                 <div className="py-4 flex justify-between gap-4">
                   <Separator orientation="vertical"></Separator>
                   <div>
-                    <h2 className="text-gray-500">Completed Tasks</h2>
-                    <p className="font-extrabold text-2xl mt-2">5</p>
+                    <div className="flex space-x-4">
+                      <h2 className="text-gray-500">Completed Tasks</h2>
+                      <SummaryCard
+                        title="Completed Tasks"
+                        current={completedCurrent}
+                        previous={completedPrevious}
+                      ></SummaryCard>
+                    </div>
+                    <p className="font-extrabold text-2xl mt-2">
+                      {completedTasks}
+                    </p>
                   </div>
                 </div>
                 <div className="py-4 flex justify-between gap-4">
                   <Separator orientation="vertical"></Separator>
                   <div>
                     <h2 className="text-gray-500">Incomplete Tasks</h2>
-                    <p className="font-extrabold text-2xl mt-2">4</p>
+                    <p className="font-extrabold text-2xl mt-2">
+                      {incompletedTasks}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -130,51 +198,29 @@ export default function Page() {
                     </CardHeader>
                     <Separator></Separator>
                     <CardContent className="space-y-1">
-                      <Card className="shadow-none dark:bg-background rounded-lg">
-                        <CardHeader className="flex justify-between items-center">
-                          <div>
-                            <CardTitle>Web Mocup</CardTitle>
-                            <CardDescription>
-                              <span className="font-bold">Yellow Branding</span>{" "}
-                              - Due in 20 hours
-                            </CardDescription>
-                          </div>
-                          <div>
-                            <Eye className="text-gray-500"></Eye>
-                          </div>
-                        </CardHeader>
-                      </Card>
-                      <Card className="shadow-none dark:bg-background rounded-lg">
-                        <CardHeader className="flex justify-between items-center">
-                          <div>
-                            <CardTitle>Web Mocup</CardTitle>
-                            <CardDescription>
-                              <span className="font-bold">Yellow Branding</span>{" "}
-                              - Due in 20 hours
-                            </CardDescription>
-                          </div>
-                          <div>
-                            <Eye className="text-gray-500"></Eye>
-                          </div>
-                        </CardHeader>
-                      </Card>
-                      <Card className="shadow-none dark:bg-background rounded-lg">
-                        <CardHeader className="flex justify-between items-center">
-                          <div>
-                            <CardTitle>Web Mocup</CardTitle>
-                            <CardDescription>
-                              <span className="font-bold">Yellow Branding</span>{" "}
-                              - Due in 20 hours
-                            </CardDescription>
-                          </div>
-                          <div>
-                            <Eye className="text-gray-500"></Eye>
-                          </div>
-                        </CardHeader>
-                      </Card>
-                      <Button size="sm" className="w-full">
-                        Show All
-                      </Button>
+                      {[1, 2, 3].map((_, index) => {
+                        return (
+                          <Card
+                            key={index}
+                            className="shadow-none dark:bg-background rounded-lg transition-all cursor-pointer hover:translate-y-[-2px]"
+                          >
+                            <CardHeader className="flex justify-between items-center">
+                              <div>
+                                <CardTitle>Web Mocup</CardTitle>
+                                <CardDescription>
+                                  <span className="font-bold">
+                                    Yellow Branding
+                                  </span>{" "}
+                                  - Due in 20 hours
+                                </CardDescription>
+                              </div>
+                              <div>
+                                <Eye className="text-gray-500"></Eye>
+                              </div>
+                            </CardHeader>
+                          </Card>
+                        );
+                      })}
                     </CardContent>
                   </Card>
                 </div>
