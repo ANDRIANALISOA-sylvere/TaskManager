@@ -14,7 +14,7 @@
 - Calendar view (coming soon)
 - Dynamic dashboard with statistics
 - Project management with user assignments
-- Clea, responsive user interface
+- Clean, responsive user interface
 
 ## Installation
 
