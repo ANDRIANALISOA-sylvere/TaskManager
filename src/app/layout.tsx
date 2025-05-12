@@ -33,20 +33,18 @@ export default function RootLayout({
       <body
         className={`${geistSans.className} ${geistMono.variable} antialiased`}
       >
-        <AuthProvider>
-          <ProjectProvider>
-            <TaskProvider>
-              <ThemeProvider
-                attribute="class"
-                defaultTheme="dark"
-                enableSystem
-                disableTransitionOnChange
-              >
-                {children}
-              </ThemeProvider>
-            </TaskProvider>
-          </ProjectProvider>
-        </AuthProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <AuthProvider>
+            <ProjectProvider>
+              <TaskProvider>{children}</TaskProvider>
+            </ProjectProvider>
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
