@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="public/logo-transparent.png" width="200" elt="TaskManager Logo"/>
+    <img src="public/logo.png" width="200" elt="TaskManager Logo"/>
 </p>
 
 <h1 align="center">TaskManager Frontend</h1>
