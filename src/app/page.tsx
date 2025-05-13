@@ -16,6 +16,7 @@ import {
 import { ModeToggle } from "@/components/ModeToggle";
 import Link from "next/link";
 import AnimatedBadge from "@/components/AnimatedBadge";
+import { Separator } from "@/components/ui/separator";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -65,8 +66,8 @@ export default function Home() {
               <div className="flex items-center flex-1 lg:flex-none">
                 <div className="flex-shrink-0 flex items-center">
                   <img
-                    src="/logo-transparent-copy.png"
-                    className="h-8 w-12"
+                    src="/logo.png"
+                    className="h-12 w-16"
                     alt="Logo"
                   />
                 </div>
@@ -193,7 +194,7 @@ export default function Home() {
         </div>
 
         {/* Main Heading */}
-        <h1 className="text-foreground text-center py-6 text-5xl font-medium tracking-normal text-balance sm:text-6xl md:text-7xl lg:text-8xl !leading-[1.15] w-full font-heading">
+        <h1 className="text-white text-center py-6 text-5xl font-medium tracking-normal text-balance sm:text-6xl md:text-7xl lg:text-8xl !leading-[1.15] w-full font-heading">
           Bring your team Together <br className="hidden md:block" />
           <span className="text-transparent bg-gradient-to-r from-violet-500 to-fuchsia-500 bg-clip-text inline-bloc">
             Effortlessly
@@ -251,11 +252,11 @@ export default function Home() {
       {/* Features Section */}
       <section
         id="features"
-        className="py-20 px-6 dark:bg-zinc-900/50 bg-gray-50"
+        className="py-20 px-6 dark:bg-background bg-gray-50"
       >
         <div className="max-w-4xl mx-auto text-center mb-16">
           <AnimatedBadge text="FEATURES"></AnimatedBadge>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 pt-2 text-foreground">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 pt-2 text-white">
             Everything you need to manage projects
           </h2>
           <p className="text-muted-foreground">
@@ -353,7 +354,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <AnimatedBadge text="HOW IT WORKS"></AnimatedBadge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 pt-2 text-foreground">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 pt-2 text-white">
               Start managing projects in minutes
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto">
@@ -443,12 +444,75 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Solutions Section */}
+      <section id="solutions" className="py-20 px-6 bg-background">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <AnimatedBadge text="SOLUTIONS"></AnimatedBadge>
+            <h2 className="text-3xl md:text-4xl font-bold pt-2 mb-4 text-white">
+              TaskManager for every team
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto">
+              Adaptable solutions for teams of all sizes across different
+              industries and use cases.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              {
+                title: "Software Development",
+                description:
+                  "Plan sprints, manage backlogs, and track bugs with tools designed for agile development teams.",
+              },
+              {
+                title: "Marketing Teams",
+                description:
+                  "Coordinate campaigns, manage content calendars, and streamline approval processes.",
+              },
+              {
+                title: "Product Management",
+                description:
+                  "Define roadmaps, gather feedback, and turn ideas into shippable products.",
+              },
+              {
+                title: "Remote Teams",
+                description:
+                  "Keep distributed teams aligned with transparent goals and clear communication.",
+              },
+              {
+                title: "Startups",
+                description:
+                  "Move fast and stay organized with flexible tools that grow with your company.",
+              },
+              {
+                title: "Enterprise",
+                description:
+                  "Scale project management across your organization with advanced security and controls.",
+              },
+            ].map((solution, index) => (
+              <div
+                key={index}
+                className="bg-background p-6 rounded-xl border border-input shadow-md transition-all group cursor-pointer"
+              >
+                <h3 className="text-xl font-semibold mb-3 text-white">
+                  {solution.title}
+                </h3>
+                <p className="text-muted-foreground mb-4">
+                  {solution.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* FAQ Section */}
       <section className="py-20 px-6 dark:bg-zinc-900/50 bg-gray-50">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-16">
             <AnimatedBadge text="FAQ"></AnimatedBadge>
-            <h2 className="text-3xl md:text-4xl font-bold pt-2 mb-4 text-foreground">
+            <h2 className="text-3xl md:text-4xl font-bold pt-2 mb-4 text-white">
               Frequently asked questions
             </h2>
             <p className="text-muted-foreground">
@@ -499,332 +563,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Solutions Section */}
-      <section id="solutions" className="py-20 px-6 bg-background">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <AnimatedBadge text="SOLUTIONS"></AnimatedBadge>
-            <h2 className="text-3xl md:text-4xl font-bold pt-2 mb-4 text-foreground">
-              TaskManager for every team
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              Adaptable solutions for teams of all sizes across different
-              industries and use cases.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              {
-                title: "Software Development",
-                description:
-                  "Plan sprints, manage backlogs, and track bugs with tools designed for agile development teams.",
-              },
-              {
-                title: "Marketing Teams",
-                description:
-                  "Coordinate campaigns, manage content calendars, and streamline approval processes.",
-              },
-              {
-                title: "Product Management",
-                description:
-                  "Define roadmaps, gather feedback, and turn ideas into shippable products.",
-              },
-              {
-                title: "Remote Teams",
-                description:
-                  "Keep distributed teams aligned with transparent goals and clear communication.",
-              },
-              {
-                title: "Startups",
-                description:
-                  "Move fast and stay organized with flexible tools that grow with your company.",
-              },
-              {
-                title: "Enterprise",
-                description:
-                  "Scale project management across your organization with advanced security and controls.",
-              },
-            ].map((solution, index) => (
-              <div
-                key={index}
-                className="bg-background p-6 rounded-xl border border-input hover:shadow-md transition-all group cursor-pointer"
-              >
-                <h3 className="text-xl font-semibold mb-3 text-foreground">
-                  {solution.title}
-                </h3>
-                <p className="text-muted-foreground mb-4">
-                  {solution.description}
-                </p>
-                <a
-                  href="#"
-                  className="inline-flex items-center text-primary font-medium hover:underline group-hover:translate-x-1 transition-transform"
-                >
-                  Learn more <ChevronRight className="w-4 h-4 ml-1" />
-                </a>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section
-        id="testimonials"
-        className="py-20 px-6 dark:bg-zinc-900/50 bg-gray-50"
-      >
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-           <AnimatedBadge text="TESTIMONIALS"></AnimatedBadge>
-            <h2 className="text-3xl md:text-4xl font-bold pt-2 mb-4 text-foreground">
-              Loved by teams worldwide
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              See why thousands of teams trust TaskManager to manage their
-              projects.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              {
-                quote:
-                  "TaskManager has transformed how our team collaborates. The intuitive interface and powerful features have increased our productivity by 30%.",
-                name: "Sarah Johnson",
-                role: "Product Manager, Acme Inc",
-              },
-              {
-                quote:
-                  "We switched from three different tools to just TaskManager. Now everything is in one place, and our team feels more connected than ever.",
-                name: "Mark Wilson",
-                role: "CTO, Globex",
-              },
-              {
-                quote:
-                  "As a remote team, TaskManager keeps us aligned and focused. The customizable workflows have been a game-changer for our processes.",
-                name: "Elena Rodriguez",
-                role: "Team Lead, Stark Industries",
-              },
-            ].map((testimonial, index) => (
-              <div
-                key={index}
-                className="bg-background p-6 rounded-xl border border-input hover:shadow-md transition-all"
-              >
-                <div className="flex items-center mb-4">
-                  <div className="text-yellow-500 flex">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-current" />
-                    ))}
-                  </div>
-                </div>
-                <p className="text-muted-foreground mb-6 italic">
-                  "{testimonial.quote}"
-                </p>
-                <div className="flex items-center">
-                  <div className="mr-3 w-10 h-10 bg-accent rounded-full flex items-center justify-center">
-                    <span className="text-xs font-medium text-accent-foreground">
-                      {testimonial.name.substr(0, 2).toUpperCase()}
-                    </span>
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-foreground">
-                      {testimonial.name}
-                    </h4>
-                    <p className="text-sm text-muted-foreground">
-                      {testimonial.role}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing Section */}
-      <section id="pricing" className="py-20 px-6 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <AnimatedBadge text="PRICING"></AnimatedBadge>
-            <h2 className="text-3xl md:text-4xl pt-2 font-bold mb-4">
-              Simple, transparent pricing
-            </h2>
-            <p className="text-gray-600 max-w-xl mx-auto">
-              Choose the plan that works best for your team. All plans include a
-              14-day free trial.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {/* Free Plan */}
-            <div className="border border-gray-200 rounded-xl p-8 hover:shadow-sm transition-all">
-              <h3 className="text-xl font-semibold mb-2">Free</h3>
-              <p className="text-gray-600 mb-6">
-                Perfect for individuals and small teams
-              </p>
-              <div className="mb-8">
-                <span className="text-4xl font-bold">$0</span>
-                <span className="text-gray-500">/month</span>
-              </div>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-center">
-                  <CheckCircle
-                    size={16}
-                    className="text-green-500 mr-2 flex-shrink-0"
-                  />
-                  <span>Up to 3 projects</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle
-                    size={16}
-                    className="text-green-500 mr-2 flex-shrink-0"
-                  />
-                  <span>Up to 5 team members</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle
-                    size={16}
-                    className="text-green-500 mr-2 flex-shrink-0"
-                  />
-                  <span>Basic task management</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle
-                    size={16}
-                    className="text-green-500 mr-2 flex-shrink-0"
-                  />
-                  <span>1GB storage</span>
-                </li>
-              </ul>
-              <button className="w-full px-6 py-3 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition-colors">
-                Get started
-              </button>
-            </div>
-
-            {/* Pro Plan */}
-            <div className="border-2 border-black rounded-xl p-8 hover:shadow-sm transition-all relative">
-              <div className="absolute top-0 right-0 bg-black text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">
-                POPULAR
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Pro</h3>
-              <p className="text-gray-600 mb-6">
-                For growing teams and organizations
-              </p>
-              <div className="mb-8">
-                <span className="text-4xl font-bold">$12</span>
-                <span className="text-gray-500">/user/month</span>
-              </div>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-center">
-                  <CheckCircle
-                    size={16}
-                    className="text-green-500 mr-2 flex-shrink-0"
-                  />
-                  <span>Unlimited projects</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle
-                    size={16}
-                    className="text-green-500 mr-2 flex-shrink-0"
-                  />
-                  <span>Unlimited team members</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle
-                    size={16}
-                    className="text-green-500 mr-2 flex-shrink-0"
-                  />
-                  <span>Advanced reporting</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle
-                    size={16}
-                    className="text-green-500 mr-2 flex-shrink-0"
-                  />
-                  <span>Custom workflows</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle
-                    size={16}
-                    className="text-green-500 mr-2 flex-shrink-0"
-                  />
-                  <span>10GB storage</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle
-                    size={16}
-                    className="text-green-500 mr-2 flex-shrink-0"
-                  />
-                  <span>Priority support</span>
-                </li>
-              </ul>
-              <button className="w-full px-6 py-3 bg-black text-white rounded-lg font-medium hover:bg-gray-800 transition-colors">
-                Start free trial
-              </button>
-            </div>
-
-            {/* Enterprise Plan */}
-            <div className="border border-gray-200 rounded-xl p-8 hover:shadow-sm transition-all">
-              <h3 className="text-xl font-semibold mb-2">Enterprise</h3>
-              <p className="text-gray-600 mb-6">
-                For large organizations with complex needs
-              </p>
-              <div className="mb-8">
-                <span className="text-4xl font-bold">Custom</span>
-                <span className="text-gray-500"></span>
-              </div>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-center">
-                  <CheckCircle
-                    size={16}
-                    className="text-green-500 mr-2 flex-shrink-0"
-                  />
-                  <span>Everything in Pro</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle
-                    size={16}
-                    className="text-green-500 mr-2 flex-shrink-0"
-                  />
-                  <span>Unlimited storage</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle
-                    size={16}
-                    className="text-green-500 mr-2 flex-shrink-0"
-                  />
-                  <span>SAML SSO</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle
-                    size={16}
-                    className="text-green-500 mr-2 flex-shrink-0"
-                  />
-                  <span>Advanced security</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle
-                    size={16}
-                    className="text-green-500 mr-2 flex-shrink-0"
-                  />
-                  <span>Dedicated account manager</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle
-                    size={16}
-                    className="text-green-500 mr-2 flex-shrink-0"
-                  />
-                  <span>Custom integrations</span>
-                </li>
-              </ul>
-              <button className="w-full px-6 py-3 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition-colors">
-                Contact sales
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Final CTA */}
       <section className="py-20 px-6 bg-gray-50">
         <div className="max-w-4xl mx-auto text-center">
@@ -846,52 +584,57 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-6 bg-white border-t border-gray-100">
+      <footer className="py-12 px-6 dark:bg-background border-gray-100">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-6 md:mb-0">
-              <span className="text-xl font-bold">TaskManager</span>
+              <img
+                src="/logo.png"
+                className="h-12 w-16"
+                alt="Logo"
+              />
             </div>
             <div className="flex flex-wrap justify-center gap-6 md:gap-8">
               <a
                 href="#features"
-                className="text-gray-500 hover:text-gray-900 text-sm font-medium transition-colors"
+                className="text-gray-500  text-sm font-medium transition-colors hover:text-foreground"
               >
                 Features
               </a>
               <a
                 href="#solutions"
-                className="text-gray-500 hover:text-gray-900 text-sm font-medium transition-colors"
+                className="text-gray-500  text-sm font-medium transition-colors hover:text-foreground"
               >
                 Solutions
               </a>
               <a
                 href="#pricing"
-                className="text-gray-500 hover:text-gray-900 text-sm font-medium transition-colors"
+                className="text-gray-500  text-sm font-medium transition-colors hover:text-foreground"
               >
                 Pricing
               </a>
               <a
                 href="#testimonials"
-                className="text-gray-500 hover:text-gray-900 text-sm font-medium transition-colors"
+                className="text-gray-500  text-sm font-medium transition-colors hover:text-foreground"
               >
                 Testimonials
               </a>
               <a
                 href="#"
-                className="text-gray-500 hover:text-gray-900 text-sm font-medium transition-colors"
+                className="text-gray-500 text-sm font-medium transition-colors hover:text-foreground"
               >
                 Blog
               </a>
               <a
                 href="#"
-                className="text-gray-500 hover:text-gray-900 text-sm font-medium transition-colors"
+                className="text-gray-500  text-sm font-medium transition-colors hover:text-foreground"
               >
                 Contact
               </a>
             </div>
           </div>
-          <div className="mt-12 pt-8 border-t border-gray-100 text-center text-sm text-gray-500">
+          <Separator className="mt-12"></Separator>
+          <div className="mt-12 pt-8 border-gray-100 text-center text-sm text-gray-500">
             <p>
               © {new Date().getFullYear()} TaskManager. All rights reserved.
             </p>
