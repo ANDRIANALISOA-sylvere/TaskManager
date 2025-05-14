@@ -37,8 +37,11 @@ const BentoCard = ({ feature, isWide = false }: BentoProps): ReactElement => {
       {/* Effet visuel en arrière-plan */}
       <div className="absolute top-0 right-0 -mr-16 -mt-16 w-40 h-40 bg-gradient-to-br from-white/5 to-transparent rounded-full blur-xl"></div>
 
+      {/* Visualisation */}
+      <div className="relative z-10">{feature.visual}</div>
+
       {/* En-tête */}
-      <div className="flex items-center justify-between mb-6 relative z-10">
+      <div className="flex items-center justify-between mt-6 relative z-10">
         <div className="flex items-center space-x-3">
           <div className="w-8 h-8 bg-black/30 rounded-lg flex items-center justify-center">
             {feature.icon}
@@ -47,20 +50,19 @@ const BentoCard = ({ feature, isWide = false }: BentoProps): ReactElement => {
         </div>
 
         {/* Indicateur (optionnel) */}
-        {Math.random() > 0.5 && (
+        {/* {Math.random() > 0.5 && (
           <div className="bg-black/30 text-xs text-yellow-400 px-2 py-1 rounded-full">
             New
           </div>
-        )}
+        )} */}
       </div>
 
       {/* Description */}
-      <p className="text-gray-400 text-sm mb-6 relative z-10">
+      <p className="text-gray-400 text-sm mb-2 relative z-10">
         {feature.description}
       </p>
 
-      {/* Visualisation */}
-      <div className="relative z-10">{feature.visual}</div>
+      
     </div>
   );
 };
@@ -83,43 +85,17 @@ export default function Home() {
   }, []);
   const features: FeatureItem[] = [
     {
-      icon: <BarChart2 size={24} className="text-blue-400" />,
+      icon: <BarChart2 size={24} className="text-foreground" />,
       title: "Kanban Boards",
       description: "Organize tasks visually with drag-and-drop simplicity",
-      bgColor: "from-blue-900/40 to-blue-900/10",
+      bgColor: "from-background-900/40 to-background-900/10",
       visual: (
-        <div className="w-full h-32 rounded-lg bg-blue-900/20 flex items-center justify-center">
+        <div className="w-full h-32 rounded-lg bg-accent/20 flex items-center justify-center">
           <div className="grid grid-cols-3 gap-2 p-2 w-5/6">
-            <div className="bg-blue-800/40 rounded p-1">
-              <div className="h-3 w-12 bg-blue-400/30 rounded mb-1"></div>
-              <div className="h-2 w-8 bg-blue-400/20 rounded"></div>
-            </div>
-            <div className="bg-blue-800/40 rounded p-1">
-              <div className="h-3 w-12 bg-blue-400/30 rounded mb-1"></div>
-              <div className="h-2 w-8 bg-blue-400/20 rounded"></div>
-            </div>
-            <div className="bg-blue-800/40 rounded p-1">
-              <div className="h-3 w-12 bg-blue-400/30 rounded mb-1"></div>
-              <div className="h-2 w-8 bg-blue-400/20 rounded"></div>
-            </div>
-          </div>
-        </div>
-      ),
-    },
-    {
-      icon: <Calendar size={24} className="text-purple-400" />,
-      title: "Calendar View",
-      description: "Plan deadlines and visualize team events intuitively",
-      bgColor: "from-purple-900/40 to-purple-900/10",
-      visual: (
-        <div className="w-full h-32 rounded-lg bg-purple-900/20 flex items-center justify-center">
-          <div className="grid grid-cols-3 gap-1 p-2 w-5/6">
-            {[...Array(9)].map((_, i) => (
-              <div
-                key={i}
-                className="h-8 bg-purple-800/40 rounded flex items-center justify-center"
-              >
-                <div className="h-2 w-2 rounded-full bg-purple-400/40"></div>
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="bg-accent/30 rounded p-1">
+                <div className="h-3 w-12 bg-accent/40 rounded mb-1"></div>
+                <div className="h-2 w-8 bg-accent/30 rounded"></div>
               </div>
             ))}
           </div>
@@ -127,58 +103,77 @@ export default function Home() {
       ),
     },
     {
-      icon: <Users size={24} className="text-green-400" />,
-      title: "Real-Time Collaboration",
-      description: "Assign tasks and communicate seamlessly in real-time",
-      bgColor: "from-green-900/40 to-green-900/10",
+      icon: <Calendar size={24} className="text-foreground" />,
+      title: "Calendar View",
+      description: "Plan deadlines and visualize team events intuitively",
+      bgColor: "from-background-900/40 to-background-900/10",
       visual: (
-        <div className="w-full h-32 rounded-lg bg-green-900/20 flex items-center justify-center">
-          <div className="flex space-x-2">
-            <div className="h-10 w-10 rounded-full bg-green-400/30 flex items-center justify-center">
-              <div className="h-6 w-6 rounded-full bg-green-400/50"></div>
-            </div>
-            <div className="h-10 w-10 rounded-full bg-green-400/30 flex items-center justify-center">
-              <div className="h-6 w-6 rounded-full bg-green-400/50"></div>
-            </div>
-            <div className="h-10 w-10 rounded-full bg-green-400/30 flex items-center justify-center">
-              <div className="h-6 w-6 rounded-full bg-green-400/50"></div>
-            </div>
+        <div className="w-full h-32 rounded-lg bg-accent/20 flex items-center justify-center">
+          <div className="grid grid-cols-3 gap-1 p-2 w-5/6">
+            {[...Array(9)].map((_, i) => (
+              <div
+                key={i}
+                className="h-8 bg-accent/30 rounded flex items-center justify-center hover:bg-accent/40 transition-colors"
+              >
+                <div className="h-2 w-2 rounded-full bg-accent/60"></div>
+              </div>
+            ))}
           </div>
         </div>
       ),
     },
     {
-      icon: <MessageCircle size={24} className="text-yellow-400" />,
+      icon: <Users size={24} className="text-foreground" />,
+      title: "Real-Time Collaboration",
+      description: "Assign tasks and communicate seamlessly in real-time",
+      bgColor: "from-background-900/40 to-background-900/10",
+      visual: (
+        <div className="w-full h-32 rounded-lg bg-accent/20 flex items-center justify-center">
+          <div className="flex space-x-2">
+            {[...Array(3)].map((_, i) => (
+              <div
+                key={i}
+                className="h-10 w-10 rounded-full bg-accent/30 flex items-center justify-center"
+              >
+                <div className="h-6 w-6 rounded-full bg-accent/50"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ),
+    },
+    {
+      icon: <MessageCircle size={24} className="text-foreground" />,
       title: "Integrated Discussions",
       description:
         "Keep all project-related conversations organized where work happens",
-      bgColor: "from-yellow-900/40 to-yellow-900/10",
+      bgColor: "from-background-900/40 to-background-900/10",
       visual: (
-        <div className="w-full h-32 rounded-lg bg-yellow-900/20 flex items-center justify-center">
+        <div className="w-full h-32 rounded-lg bg-accent/20 flex items-center justify-center">
           <div className="w-5/6 space-y-2">
-            <div className="h-6 bg-yellow-800/40 rounded w-full"></div>
-            <div className="h-6 bg-yellow-800/40 rounded w-4/5"></div>
-            <div className="h-6 bg-yellow-800/40 rounded w-5/6"></div>
+            <div className="h-6 bg-accent/50 rounded w-full"></div>
+            <div className="h-6 bg-accent/50 rounded w-4/5"></div>
+            <div className="h-6 bg-accent/50 rounded w-5/6"></div>
           </div>
         </div>
       ),
     },
     {
-      icon: <CheckCircle size={24} className="text-red-400" />,
+      icon: <CheckCircle size={24} className="text-foreground" />,
       title: "Custom Workflows",
       description: "Create workflows tailored to your team's unique processes",
-      bgColor: "from-red-900/40 to-red-900/10",
+      bgColor: "from-background-900/40 to-background-900/10",
       visual: (
-        <div className="w-full h-32 rounded-lg bg-red-900/20 flex items-center justify-center">
+        <div className="w-full h-32 rounded-lg bg-accent/20 flex items-center justify-center">
           <div className="space-y-2 w-5/6">
-            <div className="h-4 bg-red-800/40 rounded flex items-center">
-              <div className="h-3 w-3 ml-1 rounded-full bg-red-400/50"></div>
+            <div className="h-4 bg-accent/40 rounded flex items-center">
+              <div className="h-3 w-3 ml-1 rounded-full bg-accent/50"></div>
             </div>
-            <div className="h-4 bg-red-800/40 rounded flex items-center">
-              <div className="h-3 w-3 ml-1 rounded-full bg-red-400/50"></div>
+            <div className="h-4 bg-accent/40 rounded flex items-center">
+              <div className="h-3 w-3 ml-1 rounded-full bg-accent/50"></div>
             </div>
-            <div className="h-4 bg-red-800/40 rounded flex items-center">
-              <div className="h-3 w-3 ml-1 rounded-full bg-red-400/50"></div>
+            <div className="h-4 bg-accent/40 rounded flex items-center">
+              <div className="h-3 w-3 ml-1 rounded-full bg-accent/50"></div>
             </div>
           </div>
         </div>
