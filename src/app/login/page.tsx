@@ -5,7 +5,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center dark:bg-background justify-center">
       <div className="w-full max-w-sm p-4">
         <img
-          src="/logo.png"
+          src="/logo-transparent-copy.png"
           className="h-16 w-22"
           alt="Logo"
         />

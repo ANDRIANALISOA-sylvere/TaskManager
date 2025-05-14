@@ -175,7 +175,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <Image
             width={100}
             height={50}
-            src="/logo.png"
+            src="/logo-transparent-copy.png"
             alt="logo"
             priority
           ></Image>

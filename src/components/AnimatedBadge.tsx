@@ -15,7 +15,7 @@ export default function AnimatedBadge({ text, className = "" }: BadgeProps) {
           background: `conic-gradient(
             from 90deg at 50% 50%,
             var(--primary) 0%,
-            var(--chart-2) 50%,
+            var(--chart-5) 50%,
             var(--primary) 100%
           )`
         }}

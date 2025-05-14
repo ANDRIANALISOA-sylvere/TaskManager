@@ -66,7 +66,7 @@ export default function Home() {
               <div className="flex items-center flex-1 lg:flex-none">
                 <div className="flex-shrink-0 flex items-center">
                   <img
-                    src="/logo.png"
+                    src="/logo-transparent-copy.png"
                     className="h-12 w-16"
                     alt="Logo"
                   />
@@ -92,13 +92,13 @@ export default function Home() {
                         href="#pricing"
                         className="text-muted-foreground hover:text-foreground px-3 py-2 text-sm font-medium transition-colors"
                       >
-                        Pricing
+                        Faq
                       </Link>
                       <Link
                         href="#testimonials"
                         className="text-muted-foreground hover:text-foreground px-3 py-2 text-sm font-medium transition-colors"
                       >
-                        Testimonials
+                        Contact
                       </Link>
                     </div>
                   </nav>
@@ -155,14 +155,14 @@ export default function Home() {
                   className="text-muted-foreground hover:text-foreground px-3 py-2 text-sm font-medium transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  Pricing
+                  Faq
                 </Link>
                 <Link
                   href="#testimonials"
                   className="text-muted-foreground hover:text-foreground px-3 py-2 text-sm font-medium transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  Testimonials
+                  Contact
                 </Link>
                 <div className="border-t dark:border-border border-border my-2 pt-2">
                   <Link
@@ -589,7 +589,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-6 md:mb-0">
               <img
-                src="/logo.png"
+                src="/logo-transparent-copy.png"
                 className="h-12 w-16"
                 alt="Logo"
               />
