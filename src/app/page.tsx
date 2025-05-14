@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ReactNode, ReactElement } from "react";
 import {
   CheckCircle,
   BarChart2,
@@ -15,9 +15,55 @@ import {
 } from "lucide-react";
 import { ModeToggle } from "@/components/ModeToggle";
 import Link from "next/link";
-import AnimatedBadge from "@/components/AnimatedBadge";
 import { Separator } from "@/components/ui/separator";
+import AnimatedBadge from "@/components/AnimatedBadge";
+type FeatureItem = {
+  icon: ReactNode;
+  title: string;
+  description: string;
+  bgColor: string;
+  visual: ReactNode;
+};
 
+type BentoProps = {
+  feature: FeatureItem;
+  isWide?: boolean;
+};
+const BentoCard = ({ feature, isWide = false }: BentoProps): ReactElement => {
+  return (
+    <div
+      className={`bg-gradient-to-br ${feature.bgColor} p-6 rounded-xl border border-gray-800 hover:border-gray-700 transition-all group h-full relative overflow-hidden`}
+    >
+      {/* Effet visuel en arrière-plan */}
+      <div className="absolute top-0 right-0 -mr-16 -mt-16 w-40 h-40 bg-gradient-to-br from-white/5 to-transparent rounded-full blur-xl"></div>
+
+      {/* En-tête */}
+      <div className="flex items-center justify-between mb-6 relative z-10">
+        <div className="flex items-center space-x-3">
+          <div className="w-8 h-8 bg-black/30 rounded-lg flex items-center justify-center">
+            {feature.icon}
+          </div>
+          <h3 className="text-lg font-semibold text-white">{feature.title}</h3>
+        </div>
+
+        {/* Indicateur (optionnel) */}
+        {Math.random() > 0.5 && (
+          <div className="bg-black/30 text-xs text-yellow-400 px-2 py-1 rounded-full">
+            New
+          </div>
+        )}
+      </div>
+
+      {/* Description */}
+      <p className="text-gray-400 text-sm mb-6 relative z-10">
+        {feature.description}
+      </p>
+
+      {/* Visualisation */}
+      <div className="relative z-10">{feature.visual}</div>
+    </div>
+  );
+};
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -35,6 +81,110 @@ export default function Home() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+  const features: FeatureItem[] = [
+    {
+      icon: <BarChart2 size={24} className="text-blue-400" />,
+      title: "Kanban Boards",
+      description: "Organize tasks visually with drag-and-drop simplicity",
+      bgColor: "from-blue-900/40 to-blue-900/10",
+      visual: (
+        <div className="w-full h-32 rounded-lg bg-blue-900/20 flex items-center justify-center">
+          <div className="grid grid-cols-3 gap-2 p-2 w-5/6">
+            <div className="bg-blue-800/40 rounded p-1">
+              <div className="h-3 w-12 bg-blue-400/30 rounded mb-1"></div>
+              <div className="h-2 w-8 bg-blue-400/20 rounded"></div>
+            </div>
+            <div className="bg-blue-800/40 rounded p-1">
+              <div className="h-3 w-12 bg-blue-400/30 rounded mb-1"></div>
+              <div className="h-2 w-8 bg-blue-400/20 rounded"></div>
+            </div>
+            <div className="bg-blue-800/40 rounded p-1">
+              <div className="h-3 w-12 bg-blue-400/30 rounded mb-1"></div>
+              <div className="h-2 w-8 bg-blue-400/20 rounded"></div>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+    {
+      icon: <Calendar size={24} className="text-purple-400" />,
+      title: "Calendar View",
+      description: "Plan deadlines and visualize team events intuitively",
+      bgColor: "from-purple-900/40 to-purple-900/10",
+      visual: (
+        <div className="w-full h-32 rounded-lg bg-purple-900/20 flex items-center justify-center">
+          <div className="grid grid-cols-3 gap-1 p-2 w-5/6">
+            {[...Array(9)].map((_, i) => (
+              <div
+                key={i}
+                className="h-8 bg-purple-800/40 rounded flex items-center justify-center"
+              >
+                <div className="h-2 w-2 rounded-full bg-purple-400/40"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ),
+    },
+    {
+      icon: <Users size={24} className="text-green-400" />,
+      title: "Real-Time Collaboration",
+      description: "Assign tasks and communicate seamlessly in real-time",
+      bgColor: "from-green-900/40 to-green-900/10",
+      visual: (
+        <div className="w-full h-32 rounded-lg bg-green-900/20 flex items-center justify-center">
+          <div className="flex space-x-2">
+            <div className="h-10 w-10 rounded-full bg-green-400/30 flex items-center justify-center">
+              <div className="h-6 w-6 rounded-full bg-green-400/50"></div>
+            </div>
+            <div className="h-10 w-10 rounded-full bg-green-400/30 flex items-center justify-center">
+              <div className="h-6 w-6 rounded-full bg-green-400/50"></div>
+            </div>
+            <div className="h-10 w-10 rounded-full bg-green-400/30 flex items-center justify-center">
+              <div className="h-6 w-6 rounded-full bg-green-400/50"></div>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+    {
+      icon: <MessageCircle size={24} className="text-yellow-400" />,
+      title: "Integrated Discussions",
+      description:
+        "Keep all project-related conversations organized where work happens",
+      bgColor: "from-yellow-900/40 to-yellow-900/10",
+      visual: (
+        <div className="w-full h-32 rounded-lg bg-yellow-900/20 flex items-center justify-center">
+          <div className="w-5/6 space-y-2">
+            <div className="h-6 bg-yellow-800/40 rounded w-full"></div>
+            <div className="h-6 bg-yellow-800/40 rounded w-4/5"></div>
+            <div className="h-6 bg-yellow-800/40 rounded w-5/6"></div>
+          </div>
+        </div>
+      ),
+    },
+    {
+      icon: <CheckCircle size={24} className="text-red-400" />,
+      title: "Custom Workflows",
+      description: "Create workflows tailored to your team's unique processes",
+      bgColor: "from-red-900/40 to-red-900/10",
+      visual: (
+        <div className="w-full h-32 rounded-lg bg-red-900/20 flex items-center justify-center">
+          <div className="space-y-2 w-5/6">
+            <div className="h-4 bg-red-800/40 rounded flex items-center">
+              <div className="h-3 w-3 ml-1 rounded-full bg-red-400/50"></div>
+            </div>
+            <div className="h-4 bg-red-800/40 rounded flex items-center">
+              <div className="h-3 w-3 ml-1 rounded-full bg-red-400/50"></div>
+            </div>
+            <div className="h-4 bg-red-800/40 rounded flex items-center">
+              <div className="h-3 w-3 ml-1 rounded-full bg-red-400/50"></div>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+  ];
   return (
     <div className="bg-background">
       <div className="absolute inset-0 opacity-5 dark:bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[linear-gradient(to_right,#161616_1px,transparent_1px),linear-gradient(to_bottom,#161616_1px,transparent_1px)] bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)] h-full"></div>
@@ -264,88 +414,20 @@ export default function Home() {
             team stay in sync.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {[
-            {
-              icon: (
-                <BarChart2
-                  size={20}
-                  className="text-blue-600 dark:text-blue-400"
-                />
-              ),
-              title: "Kanban Boards",
-              description:
-                "Organize tasks visually and move them through customizable workflows with drag-and-drop simplicity.",
-            },
-            {
-              icon: (
-                <Calendar
-                  size={20}
-                  className="text-green-600 dark:text-green-400"
-                />
-              ),
-              title: "Calendar View",
-              description:
-                "Plan and visualize upcoming deadlines, milestones, and team events with an intuitive calendar interface.",
-            },
-            {
-              icon: (
-                <Users
-                  size={20}
-                  className="text-purple-600 dark:text-purple-400"
-                />
-              ),
-              title: "Real-Time Collaboration",
-              description:
-                "Assign tasks, track progress, and communicate with your team seamlessly in real-time.",
-            },
-            {
-              icon: (
-                <MessageCircle
-                  size={20}
-                  className="text-yellow-600 dark:text-yellow-400"
-                />
-              ),
-              title: "Integrated Discussions",
-              description:
-                "Keep all project-related conversations organized and accessible right where the work happens.",
-            },
-            {
-              icon: (
-                <CheckCircle
-                  size={20}
-                  className="text-red-600 dark:text-red-400"
-                />
-              ),
-              title: "Custom Workflows",
-              description:
-                "Create and manage custom workflows tailored to your team's unique processes and needs.",
-            },
-            {
-              icon: (
-                <Lock
-                  size={20}
-                  className="text-indigo-600 dark:text-indigo-400"
-                />
-              ),
-              title: "Advanced Security",
-              description:
-                "Enterprise-grade security features to keep your data protected at all times.",
-            },
-          ].map((feature, index) => (
-            <div
-              key={index}
-              className="bg-background p-6 rounded-xl border border-input hover:shadow-md transition-all group"
-            >
-              <div className="w-12 h-12 bg-accent/50 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                {feature.icon}
-              </div>
-              <h3 className="text-xl font-semibold mb-2 text-foreground">
-                {feature.title}
-              </h3>
-              <p className="text-muted-foreground">{feature.description}</p>
-            </div>
+        {/* Grille Bento */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-6xl mx-auto">
+          {/* Première rangée - 3 cartes */}
+          {features.slice(0, 3).map((feature, index) => (
+            <BentoCard key={index} feature={feature} />
           ))}
+
+          {/* Deuxième rangée - 2 cartes (dont une large) */}
+          <div className="md:col-span-2">
+            <BentoCard feature={features[3]} isWide={true} />
+          </div>
+          <div>
+            <BentoCard feature={features[4]} />
+          </div>
         </div>
       </section>
 
