@@ -12,6 +12,17 @@ import {
   Menu,
   X,
   ExternalLink,
+  ArrowRight,
+  Sparkles,
+  Code,
+  Megaphone,
+  LineChart,
+  Globe,
+  Building2,
+  Rocket,
+  MessageCircleQuestion,
+  ChevronUp,
+  ChevronDown,
 } from "lucide-react";
 import { ModeToggle } from "@/components/ModeToggle";
 import Link from "next/link";
@@ -37,38 +48,162 @@ const BentoCard = ({ feature, isWide = false }: BentoProps): ReactElement => {
       {/* Effet visuel en arrière-plan */}
       <div className="absolute top-0 right-0 -mr-16 -mt-16 w-40 h-40 bg-gradient-to-br from-white/5 to-transparent rounded-full blur-xl"></div>
 
-      {/* Visualisation */}
-      <div className="relative z-10">{feature.visual}</div>
-
       {/* En-tête */}
-      <div className="flex items-center justify-between mt-6 relative z-10">
+      <div className="flex items-center justify-between mb-6 relative z-10">
         <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 bg-black/30 rounded-lg flex items-center justify-center">
+          <div className="relative mb-6 inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 text-primary">
             {feature.icon}
           </div>
           <h3 className="text-lg font-semibold text-white">{feature.title}</h3>
         </div>
-
-        {/* Indicateur (optionnel) */}
-        {/* {Math.random() > 0.5 && (
-          <div className="bg-black/30 text-xs text-yellow-400 px-2 py-1 rounded-full">
-            New
-          </div>
-        )} */}
       </div>
 
       {/* Description */}
-      <p className="text-gray-400 text-sm mb-2 relative z-10">
+      <p className="text-gray-400 text-sm mb-6 relative z-10">
         {feature.description}
       </p>
 
-      
+      {/* Visualisation */}
+      <div className="relative z-10">{feature.visual}</div>
     </div>
   );
 };
+
+type FaqProps = {
+  question: string;
+  answer: string;
+};
+const FAQItem = ({ question, answer }: FaqProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className="border border-border rounded-lg overflow-hidden transition-all duration-300 hover:shadow-md">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className={`w-full flex items-center justify-between p-5 text-left transition-colors ${
+          isOpen ? "bg-accent/30" : "hover:bg-accent/10"
+        }`}
+      >
+        <h3 className="text-lg font-medium text-foreground flex items-center gap-3">
+          <span className="text-primary">
+            <MessageCircleQuestion size={20} />
+          </span>
+          {question}
+        </h3>
+        <span className="text-primary flex-shrink-0 cursor-pointer">
+          {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+        </span>
+      </button>
+
+      <div
+        className={`overflow-hidden transition-all duration-300 ${
+          isOpen ? "max-h-48" : "max-h-0"
+        }`}
+      >
+        <div className="p-5 pt-2 border-t border-border/40">
+          <p className="text-muted-foreground">{answer}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+function ImprovedFAQSection() {
+  const faqs = [
+    {
+      question: "How long is the free trial?",
+      answer:
+        "Our free trial lasts for 14 days with no credit card required. You'll have full access to all features during this period.",
+    },
+    {
+      question: "Can I change plans later?",
+      answer:
+        "Yes, you can upgrade, downgrade, or cancel your plan at any time through your account settings.",
+    },
+    {
+      question: "Is there a limit to how many tasks I can create?",
+      answer:
+        "No, all plans include unlimited tasks. The Free plan has a limit on projects and team members, but not on the number of tasks within those projects.",
+    },
+    {
+      question:
+        "Do you offer discounts for nonprofits or educational institutions?",
+      answer:
+        "Yes, we offer special pricing for nonprofit organizations, educational institutions, and open-source projects. Contact our sales team to learn more.",
+    },
+    {
+      question: "What kind of support do you offer?",
+      answer:
+        "All plans include email support. Pro and Enterprise plans also include priority support with faster response times, and Enterprise plans come with a dedicated account manager.",
+    },
+  ];
+
+  return (
+    <>
+      {/* FAQ Section */}
+      <section className="py-24 px-6 bg-gradient-to-b from-background to-background/95">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-16">
+            <AnimatedBadge text="FAQ" />
+            <h2 className="text-3xl md:text-5xl font-bold pt-2 mb-4 text-foreground">
+              Frequently asked questions
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-lg mx-auto">
+              Everything you need to know about TaskManager. Can't find the
+              answer you're looking for?{" "}
+              <a href="#contact" className="text-primary hover:underline">
+                Contact our support team
+              </a>
+              .
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            {faqs.map((faq, index) => (
+              <FAQItem
+                key={index}
+                question={faq.question}
+                answer={faq.answer}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-24 px-6 bg-gradient-to-b from-primary/5 to-primary/10">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="mb-8">
+            <span className="inline-block p-3 bg-primary/10 text-primary rounded-full">
+              <ArrowRight size={24} />
+            </span>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 text-foreground">
+            Ready to get started?
+          </h2>
+          <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
+            Join thousands of teams who manage their work with TaskManager.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-5 justify-center">
+            <button className="px-8 py-4 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all duration-300">
+              Start free trial
+            </button>
+            <button className="px-8 py-4 border border-border bg-background rounded-lg font-medium hover:bg-accent/50 transition-all duration-300">
+              Request demo
+            </button>
+          </div>
+          <p className="mt-6 text-sm text-muted-foreground">
+            No credit card required • 14-day free trial • Cancel anytime
+          </p>
+        </div>
+      </section>
+    </>
+  );
+}
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   // Détection du défilement pour l'animation de la barre de navigation
   useEffect(() => {
@@ -85,37 +220,43 @@ export default function Home() {
   }, []);
   const features: FeatureItem[] = [
     {
-      icon: <BarChart2 size={24} className="text-foreground" />,
+      icon: <BarChart2 size={24} className="text-blue-400" />,
       title: "Kanban Boards",
       description: "Organize tasks visually with drag-and-drop simplicity",
-      bgColor: "from-background-900/40 to-background-900/10",
+      bgColor: "from-blue-900/40 to-blue-900/10",
       visual: (
-        <div className="w-full h-32 rounded-lg bg-accent/20 flex items-center justify-center">
+        <div className="w-full h-32 rounded-lg bg-blue-900/20 flex items-center justify-center">
           <div className="grid grid-cols-3 gap-2 p-2 w-5/6">
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className="bg-accent/30 rounded p-1">
-                <div className="h-3 w-12 bg-accent/40 rounded mb-1"></div>
-                <div className="h-2 w-8 bg-accent/30 rounded"></div>
-              </div>
-            ))}
+            <div className="bg-blue-800/40 rounded p-1">
+              <div className="h-3 w-12 bg-blue-400/30 rounded mb-1"></div>
+              <div className="h-2 w-8 bg-blue-400/20 rounded"></div>
+            </div>
+            <div className="bg-blue-800/40 rounded p-1">
+              <div className="h-3 w-12 bg-blue-400/30 rounded mb-1"></div>
+              <div className="h-2 w-8 bg-blue-400/20 rounded"></div>
+            </div>
+            <div className="bg-blue-800/40 rounded p-1">
+              <div className="h-3 w-12 bg-blue-400/30 rounded mb-1"></div>
+              <div className="h-2 w-8 bg-blue-400/20 rounded"></div>
+            </div>
           </div>
         </div>
       ),
     },
     {
-      icon: <Calendar size={24} className="text-foreground" />,
+      icon: <Calendar size={24} className="text-purple-400" />,
       title: "Calendar View",
       description: "Plan deadlines and visualize team events intuitively",
-      bgColor: "from-background-900/40 to-background-900/10",
+      bgColor: "from-purple-900/40 to-purple-900/10",
       visual: (
-        <div className="w-full h-32 rounded-lg bg-accent/20 flex items-center justify-center">
+        <div className="w-full h-32 rounded-lg bg-purple-900/20 flex items-center justify-center">
           <div className="grid grid-cols-3 gap-1 p-2 w-5/6">
             {[...Array(9)].map((_, i) => (
               <div
                 key={i}
-                className="h-8 bg-accent/30 rounded flex items-center justify-center hover:bg-accent/40 transition-colors"
+                className="h-8 bg-purple-800/40 rounded flex items-center justify-center"
               >
-                <div className="h-2 w-2 rounded-full bg-accent/60"></div>
+                <div className="h-2 w-2 rounded-full bg-purple-400/40"></div>
               </div>
             ))}
           </div>
@@ -123,61 +264,143 @@ export default function Home() {
       ),
     },
     {
-      icon: <Users size={24} className="text-foreground" />,
+      icon: <Users size={24} className="text-green-400" />,
       title: "Real-Time Collaboration",
       description: "Assign tasks and communicate seamlessly in real-time",
-      bgColor: "from-background-900/40 to-background-900/10",
+      bgColor: "from-green-900/40 to-green-900/10",
       visual: (
-        <div className="w-full h-32 rounded-lg bg-accent/20 flex items-center justify-center">
+        <div className="w-full h-32 rounded-lg bg-green-900/20 flex items-center justify-center">
           <div className="flex space-x-2">
-            {[...Array(3)].map((_, i) => (
-              <div
-                key={i}
-                className="h-10 w-10 rounded-full bg-accent/30 flex items-center justify-center"
-              >
-                <div className="h-6 w-6 rounded-full bg-accent/50"></div>
-              </div>
-            ))}
+            <div className="h-10 w-10 rounded-full bg-green-400/30 flex items-center justify-center">
+              <div className="h-6 w-6 rounded-full bg-green-400/50"></div>
+            </div>
+            <div className="h-10 w-10 rounded-full bg-green-400/30 flex items-center justify-center">
+              <div className="h-6 w-6 rounded-full bg-green-400/50"></div>
+            </div>
+            <div className="h-10 w-10 rounded-full bg-green-400/30 flex items-center justify-center">
+              <div className="h-6 w-6 rounded-full bg-green-400/50"></div>
+            </div>
           </div>
         </div>
       ),
     },
     {
-      icon: <MessageCircle size={24} className="text-foreground" />,
+      icon: <MessageCircle size={24} className="text-yellow-400" />,
       title: "Integrated Discussions",
       description:
         "Keep all project-related conversations organized where work happens",
-      bgColor: "from-background-900/40 to-background-900/10",
+      bgColor: "from-yellow-900/40 to-yellow-900/10",
       visual: (
-        <div className="w-full h-32 rounded-lg bg-accent/20 flex items-center justify-center">
+        <div className="w-full h-32 rounded-lg bg-yellow-900/20 flex items-center justify-center">
           <div className="w-5/6 space-y-2">
-            <div className="h-6 bg-accent/50 rounded w-full"></div>
-            <div className="h-6 bg-accent/50 rounded w-4/5"></div>
-            <div className="h-6 bg-accent/50 rounded w-5/6"></div>
+            <div className="h-6 bg-yellow-800/40 rounded w-full"></div>
+            <div className="h-6 bg-yellow-800/40 rounded w-4/5"></div>
+            <div className="h-6 bg-yellow-800/40 rounded w-5/6"></div>
           </div>
         </div>
       ),
     },
     {
-      icon: <CheckCircle size={24} className="text-foreground" />,
+      icon: <CheckCircle size={24} className="text-red-400" />,
       title: "Custom Workflows",
       description: "Create workflows tailored to your team's unique processes",
-      bgColor: "from-background-900/40 to-background-900/10",
+      bgColor: "from-red-900/40 to-red-900/10",
       visual: (
-        <div className="w-full h-32 rounded-lg bg-accent/20 flex items-center justify-center">
+        <div className="w-full h-32 rounded-lg bg-red-900/20 flex items-center justify-center">
           <div className="space-y-2 w-5/6">
-            <div className="h-4 bg-accent/40 rounded flex items-center">
-              <div className="h-3 w-3 ml-1 rounded-full bg-accent/50"></div>
+            <div className="h-4 bg-red-800/40 rounded flex items-center">
+              <div className="h-3 w-3 ml-1 rounded-full bg-red-400/50"></div>
             </div>
-            <div className="h-4 bg-accent/40 rounded flex items-center">
-              <div className="h-3 w-3 ml-1 rounded-full bg-accent/50"></div>
+            <div className="h-4 bg-red-800/40 rounded flex items-center">
+              <div className="h-3 w-3 ml-1 rounded-full bg-red-400/50"></div>
             </div>
-            <div className="h-4 bg-accent/40 rounded flex items-center">
-              <div className="h-3 w-3 ml-1 rounded-full bg-accent/50"></div>
+            <div className="h-4 bg-red-800/40 rounded flex items-center">
+              <div className="h-3 w-3 ml-1 rounded-full bg-red-400/50"></div>
             </div>
           </div>
         </div>
       ),
+    },
+  ];
+
+  const solutions = [
+    {
+      title: "Software Development",
+      description:
+        "Plan sprints, manage backlogs, and track bugs with tools designed for agile development teams.",
+      icon: Code,
+      features: [
+        "Agile boards",
+        "Git integration",
+        "Automated testing",
+        "CI/CD pipeline",
+      ],
+      accentColor: "from-blue-600/20 to-cyan-400/20",
+    },
+    {
+      title: "Marketing Teams",
+      description:
+        "Coordinate campaigns, manage content calendars, and streamline approval processes.",
+      icon: Megaphone,
+      features: [
+        "Campaign tracking",
+        "Content calendar",
+        "Asset management",
+        "Analytics integration",
+      ],
+      accentColor: "from-purple-600/20 to-pink-400/20",
+    },
+    {
+      title: "Product Management",
+      description:
+        "Define roadmaps, gather feedback, and turn ideas into shippable products.",
+      icon: LineChart,
+      features: [
+        "Roadmap planning",
+        "Feature prioritization",
+        "User feedback",
+        "Release management",
+      ],
+      accentColor: "from-amber-600/20 to-yellow-400/20",
+    },
+    {
+      title: "Remote Teams",
+      description:
+        "Keep distributed teams aligned with transparent goals and clear communication.",
+      icon: Globe,
+      features: [
+        "Virtual meetings",
+        "Time zone management",
+        "Async communication",
+        "Team dashboard",
+      ],
+      accentColor: "from-emerald-600/20 to-green-400/20",
+    },
+    {
+      title: "Startups",
+      description:
+        "Move fast and stay organized with flexible tools that grow with your company.",
+      icon: Rocket,
+      features: [
+        "Quick setup",
+        "Flexible workflows",
+        "Investor reporting",
+        "Resource allocation",
+      ],
+      accentColor: "from-rose-600/20 to-red-400/20",
+    },
+    {
+      title: "Enterprise",
+      description:
+        "Scale project management across your organization with advanced security and controls.",
+      icon: Building2,
+      features: [
+        "SSO integration",
+        "Advanced permissions",
+        "Audit logging",
+        "Custom workflows",
+      ],
+      accentColor: "from-indigo-600/20 to-blue-400/20",
     },
   ];
   return (
@@ -237,7 +460,7 @@ export default function Home() {
                         href="#pricing"
                         className="text-muted-foreground hover:text-foreground px-3 py-2 text-sm font-medium transition-colors"
                       >
-                        Faq
+                        FAQ
                       </Link>
                       <Link
                         href="#testimonials"
@@ -300,7 +523,7 @@ export default function Home() {
                   className="text-muted-foreground hover:text-foreground px-3 py-2 text-sm font-medium transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  Faq
+                  FAQ
                 </Link>
                 <Link
                   href="#testimonials"
@@ -501,20 +724,48 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-6 bg-primary">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-primary-foreground">
+      <section className="relative py-24 px-6 bg-gradient-to-br from-primary to-primary/90 overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute inset-0 overflow-hidden opacity-10">
+          <div className="absolute -top-24 -left-24 w-64 h-64 rounded-full bg-primary-foreground blur-3xl"></div>
+          <div className="absolute top-1/2 -right-24 w-72 h-72 rounded-full bg-primary-foreground blur-3xl"></div>
+          <div className="absolute -bottom-32 left-1/2 transform -translate-x-1/2 w-80 h-80 rounded-full bg-primary-foreground blur-3xl"></div>
+        </div>
+
+        <div className="relative max-w-4xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-foreground/10 border border-primary-foreground/20 text-primary-foreground/90 mb-6">
+            <Sparkles size={16} className="animate-pulse" />
+            <span className="text-sm font-medium">
+              New features available now
+            </span>
+          </div>
+
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 text-primary-foreground tracking-tight">
             Ready to transform how your team works?
           </h2>
-          <p className="text-xl text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
+
+          <p className="text-xl text-primary-foreground/80 mb-10 max-w-2xl mx-auto leading-relaxed">
             Join thousands of teams already using TaskManager to streamline
             their workflows and boost productivity.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="px-8 py-3 bg-background text-foreground rounded-lg font-medium hover:bg-accent transition-colors">
+
+          <div className="flex flex-col sm:flex-row gap-5 justify-center">
+            <button
+              className="group px-8 py-4 bg-background text-foreground rounded-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
               Start your free trial
+              <ArrowRight
+                size={18}
+                className={`transform transition-transform duration-300 ${
+                  isHovered ? "translate-x-1" : ""
+                }`}
+              />
             </button>
-            <button className="px-8 py-3 border border-primary-foreground/30 text-primary-foreground rounded-lg font-medium hover:bg-primary-foreground/10 transition-colors">
+
+            <button className="px-8 py-4 border border-primary-foreground/30 bg-primary-foreground/10 text-primary-foreground rounded-lg font-medium hover:bg-primary-foreground/20 transition-all duration-300 flex items-center justify-center gap-2">
+              <Calendar size={18} />
               Schedule a demo
             </button>
           </div>
@@ -522,143 +773,74 @@ export default function Home() {
       </section>
 
       {/* Solutions Section */}
-      <section id="solutions" className="py-20 px-6 bg-background">
+      <section id="solutions" className="py-24 px-6 bg-background">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <AnimatedBadge text="SOLUTIONS"></AnimatedBadge>
-            <h2 className="text-3xl md:text-4xl font-bold pt-2 mb-4 text-white">
+          <div className="text-center mb-20">
+            <AnimatedBadge text="SOLUTIONS" />
+            <h2 className="text-3xl md:text-5xl font-bold pt-2 mb-4 text-foreground">
               TaskManager for every team
             </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
               Adaptable solutions for teams of all sizes across different
               industries and use cases.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              {
-                title: "Software Development",
-                description:
-                  "Plan sprints, manage backlogs, and track bugs with tools designed for agile development teams.",
-              },
-              {
-                title: "Marketing Teams",
-                description:
-                  "Coordinate campaigns, manage content calendars, and streamline approval processes.",
-              },
-              {
-                title: "Product Management",
-                description:
-                  "Define roadmaps, gather feedback, and turn ideas into shippable products.",
-              },
-              {
-                title: "Remote Teams",
-                description:
-                  "Keep distributed teams aligned with transparent goals and clear communication.",
-              },
-              {
-                title: "Startups",
-                description:
-                  "Move fast and stay organized with flexible tools that grow with your company.",
-              },
-              {
-                title: "Enterprise",
-                description:
-                  "Scale project management across your organization with advanced security and controls.",
-              },
-            ].map((solution, index) => (
-              <div
-                key={index}
-                className="bg-background p-6 rounded-xl border border-input shadow-md transition-all group cursor-pointer"
-              >
-                <h3 className="text-xl font-semibold mb-3 text-white">
-                  {solution.title}
-                </h3>
-                <p className="text-muted-foreground mb-4">
-                  {solution.description}
-                </p>
-              </div>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {solutions.map((solution, index) => {
+              const Icon = solution.icon;
+
+              return (
+                <div
+                  key={index}
+                  className={`relative bg-card overflow-hidden p-8 rounded-xl border border-border shadow-md group`}
+                >
+                  {/* Gradient background that appears on hover */}
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${solution.accentColor}`}
+                  />
+
+                  {/* Icon with circular background */}
+                  <div className="relative mb-6 inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 text-primary">
+                    <Icon size={24} />
+                  </div>
+
+                  <h3 className="relative text-xl font-semibold mb-3 text-foreground group-hover:text-foreground/90">
+                    {solution.title}
+                  </h3>
+
+                  <p className="relative text-muted-foreground mb-6 group-hover:text-muted-foreground/90">
+                    {solution.description}
+                  </p>
+
+                  {/* Feature list that appears on hover */}
+                  <div className="relative space-y-2 mb-6 transition-all duration-300 opacity-100 max-h-40">
+                    {solution.features.map((feature, i) => (
+                      <div key={i} className="flex items-center gap-2">
+                        <CheckCircle size={16} className="text-primary" />
+                        <span className="text-sm text-muted-foreground">
+                          {feature}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Learn more link */}
+                  <div className="relative mt-4">
+                    <span className="inline-flex items-center text-sm font-medium text-primary gap-2">
+                      Learn more
+                      <ArrowRight size={16} />
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 px-6 dark:bg-zinc-900/50 bg-gray-50">
-        <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-16">
-            <AnimatedBadge text="FAQ"></AnimatedBadge>
-            <h2 className="text-3xl md:text-4xl font-bold pt-2 mb-4 text-white">
-              Frequently asked questions
-            </h2>
-            <p className="text-muted-foreground">
-              Everything you need to know about TaskManager.
-            </p>
-          </div>
-
-          <div className="space-y-8">
-            {[
-              {
-                question: "How long is the free trial?",
-                answer:
-                  "Our free trial lasts for 14 days with no credit card required. You'll have full access to all features during this period.",
-              },
-              {
-                question: "Can I change plans later?",
-                answer:
-                  "Yes, you can upgrade, downgrade, or cancel your plan at any time through your account settings.",
-              },
-              {
-                question: "Is there a limit to how many tasks I can create?",
-                answer:
-                  "No, all plans include unlimited tasks. The Free plan has a limit on projects and team members, but not on the number of tasks within those projects.",
-              },
-              {
-                question:
-                  "Do you offer discounts for nonprofits or educational institutions?",
-                answer:
-                  "Yes, we offer special pricing for nonprofit organizations, educational institutions, and open-source projects. Contact our sales team to learn more.",
-              },
-              {
-                question: "What kind of support do you offer?",
-                answer:
-                  "All plans include email support. Pro and Enterprise plans also include priority support with faster response times, and Enterprise plans come with a dedicated account manager.",
-              },
-            ].map((item, index) => (
-              <div
-                key={index}
-                className="border-b border-border pb-6 hover:bg-accent/20 p-4 -mx-4 rounded-lg transition-colors"
-              >
-                <h3 className="text-xl font-semibold mb-2 text-foreground">
-                  {item.question}
-                </h3>
-                <p className="text-muted-foreground">{item.answer}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Final CTA */}
-      <section className="py-20 px-6 bg-gray-50">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Ready to get started?
-          </h2>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Join thousands of teams who manage their work with TaskManager.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="px-8 py-3 bg-black text-white rounded-lg font-medium hover:bg-gray-800 transition-colors">
-              Start free trial
-            </button>
-            <button className="px-8 py-3 border border-gray-300 bg-white rounded-lg font-medium hover:bg-gray-50 transition-colors">
-              Request demo
-            </button>
-          </div>
-        </div>
-      </section>
+      <ImprovedFAQSection></ImprovedFAQSection>
 
       {/* Footer */}
       <footer className="py-12 px-6 dark:bg-background border-gray-100">
