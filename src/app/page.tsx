@@ -110,30 +110,29 @@ const FAQItem = ({ question, answer }: FaqProps) => {
 function ImprovedFAQSection() {
   const faqs = [
     {
-      question: "How long is the free trial?",
+      question: "Is TaskManager really free?",
       answer:
-        "Our free trial lasts for 14 days with no credit card required. You'll have full access to all features during this period.",
+        "Yes! TaskManager is 100% free with no hidden costs, trials, or premium plans. Enjoy all features without paying anything.",
     },
     {
-      question: "Can I change plans later?",
+      question: "Are there any limits on tasks or projects?",
       answer:
-        "Yes, you can upgrade, downgrade, or cancel your plan at any time through your account settings.",
+        "No, you can create unlimited tasks and projects. No restrictions—use it as much as you need!",
     },
     {
-      question: "Is there a limit to how many tasks I can create?",
+      question: "Do I need a credit card to sign up?",
       answer:
-        "No, all plans include unlimited tasks. The Free plan has a limit on projects and team members, but not on the number of tasks within those projects.",
+        "Nope! Just sign up with your email (or Google/GitHub), and you’re ready to go. No payment details required.",
     },
     {
-      question:
-        "Do you offer discounts for nonprofits or educational institutions?",
+      question: "How does TaskManager stay free?",
       answer:
-        "Yes, we offer special pricing for nonprofit organizations, educational institutions, and open-source projects. Contact our sales team to learn more.",
+        "We prioritize simplicity and user experience over monetization. If we ever introduce paid features, the core task management will always remain free.",
     },
     {
-      question: "What kind of support do you offer?",
+      question: "What kind of support is available?",
       answer:
-        "All plans include email support. Pro and Enterprise plans also include priority support with faster response times, and Enterprise plans come with a dedicated account manager.",
+        "We offer community support via forums and email. Since we’re free, responses may take longer than paid tools, but we’re here to help!",
     },
   ];
 
@@ -181,19 +180,16 @@ function ImprovedFAQSection() {
             Ready to get started?
           </h2>
           <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
-            Join thousands of teams who manage their work with TaskManager.
+            Join your teams who manage their work with TaskManager.
           </p>
           <div className="flex flex-col sm:flex-row gap-5 justify-center">
-            <button className="px-8 py-4 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all duration-300">
+            <button className="cursor-pointer px-8 py-4 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all duration-300">
               Start free trial
             </button>
-            <button className="px-8 py-4 border border-border bg-background rounded-lg font-medium hover:bg-accent/50 transition-all duration-300">
+            <button className="cursor-pointer px-8 py-4 border border-border bg-background rounded-lg font-medium hover:bg-accent/50 transition-all duration-300">
               Request demo
             </button>
           </div>
-          <p className="mt-6 text-sm text-muted-foreground">
-            No credit card required • 14-day free trial • Cancel anytime
-          </p>
         </div>
       </section>
     </>
@@ -494,7 +490,7 @@ export default function Home() {
                   className="items-center justify-center whitespace-nowrap rounded-md shadow-none text-sm font-medium ring-offset-background transition transform-gpu ease-in-out duration-300 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 active:scale-95 select-none bg-primary text-primary-foreground hover:opacity-90 h-9 px-4 hidden sm:flex"
                   href="/signup"
                 >
-                  Start for free
+                  Explore for free
                 </Link>
               </div>
             </div>
@@ -545,7 +541,7 @@ export default function Home() {
                     href="/signup"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    Start for free
+                    Explore for free
                   </Link>
                 </div>
               </nav>
@@ -665,11 +661,11 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
             <div>
-              <div className="bg-accent/30 p-3 rounded-xl border border-input shadow-md">
+              <div className="p-3">
                 <img
-                  src="/api/placeholder/600/400"
-                  alt="TaskManager Setup"
-                  className="rounded-lg w-full"
+                  src="/illustration-copy.png"
+                  alt="Illustration"
+                  className="w-full"
                 />
               </div>
             </div>
@@ -751,7 +747,7 @@ export default function Home() {
 
           <div className="flex flex-col sm:flex-row gap-5 justify-center">
             <button
-              className="group px-8 py-4 bg-background text-foreground rounded-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2"
+              className="cursor-pointer group px-8 py-4 bg-background text-foreground rounded-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2"
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
@@ -764,7 +760,7 @@ export default function Home() {
               />
             </button>
 
-            <button className="px-8 py-4 border border-primary-foreground/30 bg-primary-foreground/10 text-primary-foreground rounded-lg font-medium hover:bg-primary-foreground/20 transition-all duration-300 flex items-center justify-center gap-2">
+            <button className="cursor-pointer px-8 py-4 border border-primary-foreground/30 bg-primary-foreground/10 text-primary-foreground rounded-lg font-medium hover:bg-primary-foreground/20 transition-all duration-300 flex items-center justify-center gap-2">
               <Calendar size={18} />
               Schedule a demo
             </button>
@@ -867,22 +863,10 @@ export default function Home() {
                 Solutions
               </a>
               <a
-                href="#pricing"
+                href="#solutions"
                 className="text-gray-500  text-sm font-medium transition-colors hover:text-foreground"
               >
-                Pricing
-              </a>
-              <a
-                href="#testimonials"
-                className="text-gray-500  text-sm font-medium transition-colors hover:text-foreground"
-              >
-                Testimonials
-              </a>
-              <a
-                href="#"
-                className="text-gray-500 text-sm font-medium transition-colors hover:text-foreground"
-              >
-                Blog
+                FAQ
               </a>
               <a
                 href="#"

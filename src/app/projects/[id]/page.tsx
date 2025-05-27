@@ -236,7 +236,7 @@ export default function Project() {
                       <DialogTrigger asChild>
                         <Button
                           size="sm"
-                          className="bg-blue-500 text-white cursor-pointer hover:bg-blue-800"
+                          className="bg-pink-600 text-white cursor-pointer hover:bg-pink-700"
                         >
                           <Plus></Plus> New
                         </Button>

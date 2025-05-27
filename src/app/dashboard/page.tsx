@@ -16,7 +16,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { Eye, PackageIcon, Plus } from "lucide-react";
+import { Eye, PackageIcon, Plus, PlusIcon } from "lucide-react";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { useTasks } from "@/contexts/TaskContext";
 import Loading from "@/components/Loading";
@@ -35,13 +35,10 @@ import { Input } from "@/components/ui/input";
 import { createProject } from "@/lib/api";
 import { useProjects } from "@/contexts/ProjectContext";
 import Link from "next/link";
-import {
-  getMonth,
-  getYear,
-  isThisMonth,
-  parseISO,
-} from "date-fns";
+import { getMonth, getYear, isThisMonth, parseISO } from "date-fns";
 import SummaryCard from "@/components/SummaryCard";
+import Image from "next/image";
+import { Textarea } from "@/components/ui/textarea";
 
 function isLastMonth(date: Date): boolean {
   const now = new Date();
@@ -98,7 +95,6 @@ export default function Page() {
   ).length;
 
   console.log(completedCurrent);
-  
 
   return (
     <ProtectedRoute>
@@ -123,7 +119,7 @@ export default function Page() {
           {TaskLoading || ProjectLoading ? (
             <Loading></Loading>
           ) : (
-            <div className="px-8">
+            <div className="px-8 mb-2">
               <div className="flex flex-row justify-around border rounded-md">
                 <div className="py-4 flex justify-between">
                   <div>
@@ -221,6 +217,7 @@ export default function Page() {
                           </Card>
                         );
                       })}
+                      <Button className="w-full">Show all</Button>
                     </CardContent>
                   </Card>
                 </div>
@@ -297,23 +294,58 @@ export default function Page() {
                   </Card>
                 </div>
                 <div>
-                  <Card className="shadow-none rounded-sm">
+                  <Card className="shadow-none rounded-sm dark:bg-background">
                     <CardHeader>
-                      <CardTitle>Projects</CardTitle>
-                      <CardDescription></CardDescription>
+                      <CardTitle className="flex justify-between">
+                        <span>People (10)</span>
+                        <span>
+                          <Button className="cursor-pointer bg-pink-600 hover:bg-pink-800">
+                            <PlusIcon className="dark:text-white"></PlusIcon>
+                          </Button>
+                        </span>
+                      </CardTitle>
                     </CardHeader>
                     <Separator></Separator>
-                    <CardContent></CardContent>
+                    <CardContent className="grid grid-cols-3 gap-2 items-center">
+                      {[1, 2, 3, 4, 5, 6].map((_, index) => {
+                        return (
+                          <Card
+                            className="text-center dark:bg-background"
+                            key={index}
+                          >
+                            <div className="flex justify-center">
+                              <Image
+                                width={52}
+                                height={52}
+                                src="/avatar.png"
+                                alt="avatar"
+                                className="rounded-full"
+                              ></Image>
+                            </div>
+                            <div>
+                              <h1>Marc Robinson</h1>
+                              <CardDescription>marc@gmail.com</CardDescription>
+                            </div>
+                          </Card>
+                        );
+                      })}
+                    </CardContent>
                   </Card>
                 </div>
                 <div>
                   <Card className="shadow-none rounded-sm">
                     <CardHeader>
-                      <CardTitle>Projects</CardTitle>
-                      <CardDescription></CardDescription>
+                      <CardTitle>Private Notepad</CardTitle>
                     </CardHeader>
                     <Separator></Separator>
-                    <CardContent></CardContent>
+                    <CardContent>
+                      <Textarea
+                        placeholder="Type your note here."
+                        id="note"
+                        name="note"
+                        className="h-52"
+                      />
+                    </CardContent>
                   </Card>
                 </div>
               </div>
